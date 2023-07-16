@@ -1,5 +1,11 @@
+import HomeBanner from "./sections/HomeBanner";
+
 function HomeScreen() {
-  return <div>HomeScreen</div>;
+  return (
+    <div>
+      <HomeBanner />
+    </div>
+  );
 }
 
 export default HomeScreen;

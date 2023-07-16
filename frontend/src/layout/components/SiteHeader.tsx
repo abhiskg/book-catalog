@@ -66,7 +66,7 @@ function SiteHeader() {
   const { classes, cx } = useStyles();
 
   return (
-    <Header height={60} mb={120}>
+    <Header height={60}>
       <Container className={classes.header}>
         <div>Book Catalog</div>
         <Group spacing={5} className={classes.links}>
