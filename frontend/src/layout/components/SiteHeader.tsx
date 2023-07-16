@@ -68,7 +68,9 @@ function SiteHeader() {
   return (
     <Header height={60}>
       <Container className={classes.header} size={"lg"}>
-        <div>Book Catalog</div>
+        <Link to="/" className={classes.link}>
+          Book Catalog
+        </Link>
         <Group spacing={5} className={classes.links}>
           <Link
             to="/"

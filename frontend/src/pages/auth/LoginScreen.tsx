@@ -11,6 +11,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { Link } from "react-router-dom";
 
 function LoginScreen() {
   const form = useForm({
@@ -79,7 +80,7 @@ function LoginScreen() {
           </Stack>
 
           <Group position="apart" mt="xl">
-            <Anchor component="button" type="button" color="dimmed" size="xs">
+            <Anchor component={Link} to="/sign-up" color="dimmed" size="xs">
               Don't have an account? Register
             </Anchor>
             <Button type="submit" radius="xl">
