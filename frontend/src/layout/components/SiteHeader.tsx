@@ -71,12 +71,12 @@ function SiteHeader() {
         <div>Book Catalog</div>
         <Group spacing={5} className={classes.links}>
           <Link
-            to="/home"
+            to="/"
             className={cx(classes.link, {
-              [classes.linkActive]: active === "/home",
+              [classes.linkActive]: active === "/",
             })}
             onClick={() => {
-              setActive("/home");
+              setActive("/");
             }}
           >
             Home
