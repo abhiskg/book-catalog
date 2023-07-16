@@ -32,7 +32,7 @@ function LoginScreen() {
     console.log("first");
   };
   return (
-    <Container>
+    <Container size={"xs"}>
       <Paper radius="md" p="xl" withBorder>
         <Text size="lg" weight={500}>
           Welcome to Mantine, with

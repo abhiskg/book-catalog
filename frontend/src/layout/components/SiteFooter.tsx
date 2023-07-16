@@ -32,7 +32,7 @@ function SiteFooter() {
 
   return (
     <div className={classes.footer}>
-      <Container className={classes.inner}>
+      <Container className={classes.inner} size={"lg"}>
         Book Catalog
         <Group className={classes.links}>Hi</Group>
       </Container>
