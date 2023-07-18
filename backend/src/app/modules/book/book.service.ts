@@ -1,11 +1,15 @@
 import { PaginationHelper } from "../../../helpers/pagination.helper";
 import { type IGenericMongoDBDocument } from "../../../interfaces/document.interface";
 import type { IPaginationOptions } from "../../../interfaces/pagination.interface";
-
 import { UpdateHelper } from "../../../helpers/update.helper";
 import { bookSearchableFields } from "./book.constant";
 import { IBook, IBookFilters } from "./book.interface";
 import Book from "./book.model";
+
+const createBook = async (payload: IBook) => {
+  const result = await Book.create(payload);
+  return result;
+};
 
 const getAllBooks = async (
   filters: IBookFilters,
@@ -83,6 +87,7 @@ const deleteBook = async (id: string) => {
 };
 
 export const BookService = {
+  createBook,
   getAllBooks,
   deleteBook,
   getSingleBook,

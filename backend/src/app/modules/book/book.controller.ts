@@ -7,6 +7,17 @@ import catchAsyncError from "../../middlewares/catchAsyncError";
 import { bookFilterableFields } from "./book.constant";
 import { BookService } from "./book.service";
 
+const createBook: RequestHandler = catchAsyncError(async (req, res) => {
+  const result = await BookService.createBook(req.body);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Book created successfully!",
+    data: result,
+  });
+});
+
 const getAllBooks: RequestHandler = catchAsyncError(async (req, res) => {
   const filters = pick(req.query, bookFilterableFields);
   const paginationOptions = pick(req.query, paginationFields);
@@ -70,6 +81,7 @@ const deleteBook: RequestHandler = catchAsyncError(async (req, res) => {
 });
 
 export const BookController = {
+  createBook,
   getAllBooks,
   getSingleBook,
   updateBook,
