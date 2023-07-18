@@ -15,7 +15,7 @@ process.on("uncaughtException", (error) => {
 (async function () {
   try {
     await mongoose.connect(config.mongo_uri, {
-      dbName: "cow-hut-admin-with-auth",
+      dbName: "book-catalog",
     });
     console.log("Database is connected Successfully");
 
