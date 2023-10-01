@@ -1,12 +1,12 @@
-import { ApiError } from '../../../error/ApiError';
-import { JwtPayload } from 'jsonwebtoken';
-import { PlanToRead } from './planToRead.model';
-import { IPlanToRead } from './planToRead.interface';
+import { JwtPayload } from "jsonwebtoken";
+import { PlanToRead } from "./planToRead.model";
+import { IPlanToRead } from "./planToRead.interface";
+import ApiError from "../../../errors/ApiError";
 
 const addPlanToRead = async (payload: IPlanToRead) => {
   const result = await PlanToRead.create(payload);
   if (!result) {
-    throw new ApiError(404, 'added Wishlist failed');
+    throw new ApiError(404, "added Wishlist failed");
   }
   return result;
 };

@@ -1,12 +1,12 @@
-import { ApiError } from '../../../error/ApiError';
-import { JwtPayload } from 'jsonwebtoken';
-import { IFinishedBook } from './finishedBook.interface';
-import { FinishedBook } from './finishedBook.model';
+import { JwtPayload } from "jsonwebtoken";
+import ApiError from "../../../errors/ApiError";
+import { IFinishedBook } from "./finishedBook.interface";
+import { FinishedBook } from "./finishedBook.model";
 
 const addFinishedBook = async (payload: IFinishedBook) => {
   const result = await FinishedBook.create(payload);
   if (!result) {
-    throw new ApiError(404, 'added finished book failed');
+    throw new ApiError(404, "added finished book failed");
   }
   return result;
 };

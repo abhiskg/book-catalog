@@ -1,50 +1,46 @@
-import httpStatus from 'http-status';
-import AsyncErrorHandler from '../../../shared/AsyncErrorHandler';
-import sendResponse from '../../../shared/sendResponse';
-import { Request, Response } from 'express';
-import { WishlistService } from './wishlist.service';
-import { Wishlist } from './wishlist.model';
-import { ApiError } from '../../../error/ApiError';
+import { Request, Response } from "express";
+import sendResponse from "../../../shared/sendResponse";
+import { Wishlist } from "./wishlist.model";
+import { WishlistService } from "./wishlist.service";
+import catchAsyncError from "../../middlewares/catchAsyncError";
 
-const addBookWishlist = AsyncErrorHandler(
-  async (req: Request, res: Response) => {
-    const book = req.body;
+const addBookWishlist = catchAsyncError(async (req: Request, res: Response) => {
+  const book = req.body;
 
-    const isExist = await Wishlist.findOne({
+  const isExist = await Wishlist.findOne({
+    userEmail: book?.userEmail,
+    bookId: book?.bookId,
+  }).lean();
+
+  if (isExist) {
+    await Wishlist.deleteOne({
       userEmail: book?.userEmail,
       bookId: book?.bookId,
-    }).lean();
+    });
 
-    if (isExist) {
-      await Wishlist.deleteOne({
-        userEmail: book?.userEmail,
-        bookId: book?.bookId,
-      });
-
-      return sendResponse(res, {
-        statusCode: httpStatus.OK,
-        success: true,
-        message: 'Remove from wishlist successfully',
-      });
-    }
-    const result = await WishlistService.addBookWishlist(book);
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
+    return sendResponse(res, {
+      statusCode: 200,
       success: true,
-      message: 'Book added in wishlist successfully',
-      data: result,
+      message: "Remove from wishlist successfully",
     });
   }
-);
+  const result = await WishlistService.addBookWishlist(book);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Book added in wishlist successfully",
+    data: result,
+  });
+});
 
-const getWishlists = AsyncErrorHandler(async (req: Request, res: Response) => {
+const getWishlists = catchAsyncError(async (req: Request, res: Response) => {
   const user = req.user;
   const result = await WishlistService.getWishlists(user);
 
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: 200,
     success: true,
-    message: 'Wishlist retrieved successfully',
+    message: "Wishlist retrieved successfully",
     data: result,
   });
 });

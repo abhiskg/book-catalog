@@ -1,12 +1,10 @@
-import httpStatus from 'http-status';
-import AsyncErrorHandler from '../../../shared/AsyncErrorHandler';
-import sendResponse from '../../../shared/sendResponse';
-import { Request, Response } from 'express';
-import { ApiError } from '../../../error/ApiError';
-import { PlanToRead } from './planToRead.model';
-import { PlanToReadService } from './planToRead.service';
+import { Request, Response } from "express";
+import sendResponse from "../../../shared/sendResponse";
+import catchAsyncError from "../../middlewares/catchAsyncError";
+import { PlanToRead } from "./planToRead.model";
+import { PlanToReadService } from "./planToRead.service";
 
-const addPlanToRead = AsyncErrorHandler(async (req: Request, res: Response) => {
+const addPlanToRead = catchAsyncError(async (req: Request, res: Response) => {
   const book = req.body;
 
   const isExist = await PlanToRead.findOne({
@@ -21,28 +19,28 @@ const addPlanToRead = AsyncErrorHandler(async (req: Request, res: Response) => {
     });
 
     return sendResponse(res, {
-      statusCode: httpStatus.OK,
+      statusCode: 200,
       success: true,
-      message: 'Remove from Plan To Read successfully',
+      message: "Remove from Plan To Read successfully",
     });
   }
   const result = await PlanToReadService.addPlanToRead(book);
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: 200,
     success: true,
-    message: 'Book added in Plan To Read successfully',
+    message: "Book added in Plan To Read successfully",
     data: result,
   });
 });
 
-const getPlanToRead = AsyncErrorHandler(async (req: Request, res: Response) => {
+const getPlanToRead = catchAsyncError(async (req: Request, res: Response) => {
   const user = req.user;
   const result = await PlanToReadService.getPlanToRead(user);
 
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: 200,
     success: true,
-    message: 'PlanToRead retrieved successfully',
+    message: "PlanToRead retrieved successfully",
     data: result,
   });
 });
