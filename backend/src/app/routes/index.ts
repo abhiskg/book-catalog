@@ -37,4 +37,4 @@ export const moduleRoute = [
 
 moduleRoute.forEach((route) => router.use(route.path, route.route));
 
-export const routes = router;
+export const RootRoute = router;
