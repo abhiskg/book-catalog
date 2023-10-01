@@ -3,8 +3,8 @@ import apiSlice from "../api/apiSlice";
 
 const bookApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getBooks: builder.query<IBook[], void>({
-      query: () => "/books",
+    getBooks: builder.query<IBook[], string>({
+      query: (queryString: string) => `/books${queryString}`,
       transformResponse: (response: { data: IBook[] }, meta, arg) =>
         response.data,
     }),
