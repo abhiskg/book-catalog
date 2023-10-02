@@ -38,7 +38,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function BookCard({ book }: { book: IBook }) {
-  const { classes, theme } = useStyles();
+  const { classes } = useStyles();
 
   return (
     <Card withBorder radius="md" p="md" className={classes.card}>

@@ -1,6 +1,6 @@
+import { useCreateUserMutation } from "@/redux/api/authApi";
 import {
   Anchor,
-  Button,
   Container,
   Group,
   Paper,
@@ -10,9 +10,25 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 
 function RegisterScreen() {
+  const navigate = useNavigate();
+  const [createUser, { data, isError, isSuccess, error }] =
+    useCreateUserMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data?.message);
+      navigate("/sign-in");
+    }
+    if (isError) {
+      toast.error((error as any)?.data?.message);
+    }
+  }, [isSuccess, isError, data?.message]);
+
   const form = useForm({
     initialValues: {
       name: "",
@@ -23,14 +39,14 @@ function RegisterScreen() {
     validate: {
       email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
       password: (val) =>
-        val.length <= 6
+        val.length <= 5
           ? "Password should include at least 6 characters"
           : null,
     },
   });
 
-  const handleSubmit = () => {
-    console.log("first");
+  const handleSubmit = (data: any) => {
+    createUser(data);
   };
   return (
     <div className="my-20">
@@ -40,7 +56,7 @@ function RegisterScreen() {
             Welcome to Book Catalog
           </Text>
 
-          <form onSubmit={form.onSubmit(() => handleSubmit)}>
+          <form onSubmit={form.onSubmit((data) => handleSubmit(data))}>
             <Stack>
               <TextInput
                 label="Name"
@@ -83,10 +99,13 @@ function RegisterScreen() {
               <Anchor component={Link} to="/sign-in" color="dimmed" size="xs">
                 Already have an account? Login
               </Anchor>
-              <Button type="submit" radius="xl">
-                Login
-              </Button>
             </Group>
+            <button
+              type="submit"
+              className="bg-blue-500 w-full py-2 rounded text-white font-medium mt-3"
+            >
+              Register
+            </button>
           </form>
         </Paper>
       </Container>
