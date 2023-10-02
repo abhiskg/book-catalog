@@ -112,6 +112,32 @@ function SiteHeader() {
           >
             All Books
           </Link>
+          {user?.accessToken && (
+            <>
+              <Link
+                to="/book/wishlist"
+                className={cx(classes.link, {
+                  [classes.linkActive]: active === "/book/wishlist",
+                })}
+                onClick={() => {
+                  setActive("/book/wishlist");
+                }}
+              >
+                Wishlist
+              </Link>
+              <Link
+                to="/book/plan-to-read"
+                className={cx(classes.link, {
+                  [classes.linkActive]: active === "/book/plan-to-read",
+                })}
+                onClick={() => {
+                  setActive("/book/plan-to-read");
+                }}
+              >
+                Book Plan
+              </Link>
+            </>
+          )}
           {!user?.accessToken ? (
             <>
               {" "}

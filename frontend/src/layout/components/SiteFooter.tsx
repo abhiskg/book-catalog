@@ -34,7 +34,7 @@ function SiteFooter() {
     <div className={classes.footer}>
       <Container className={classes.inner} size={"lg"}>
         Book Catalog
-        <Group className={classes.links}>Hi</Group>
+        <Group className={classes.links}>@copywrite 2023</Group>
       </Container>
     </div>
   );
