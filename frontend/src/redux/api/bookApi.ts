@@ -4,7 +4,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const bookApi = createApi({
   reducerPath: 'book',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://the-bookshelf.vercel.app',
+    baseUrl: 'https://book-catelog-backend-chi.vercel.app',
     prepareHeaders: (headers) => {
       const user: { accessToken: string; email: string } | null =
         userInfoFromLocalstorage ? userInfoFromLocalstorage : null;

@@ -4,9 +4,11 @@ import SiteHeader from "./components/SiteHeader";
 
 function MainLayout() {
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <SiteHeader />
-      <Outlet />
+      <div className="flex-1 h-full">
+        <Outlet />
+      </div>
       <SiteFooter />
     </div>
   );
