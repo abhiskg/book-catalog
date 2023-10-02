@@ -15,7 +15,7 @@ const PrivateRoute = ({ children }: IProps) => {
     return <Navigate to="/sign-in" />;
   }
 
-  return children;
+  return <>{children}</>;
 };
 
 export default PrivateRoute;

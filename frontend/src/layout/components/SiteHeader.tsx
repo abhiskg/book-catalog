@@ -1,7 +1,3 @@
-import {
-  useGetBookWishlistQuery,
-  useGetPlanToReadBooksQuery,
-} from "@/redux/api/bookApi";
 import { userInfoFromLocalstorage } from "@/utils/utils";
 import {
   Burger,
@@ -71,8 +67,6 @@ function SiteHeader() {
   const [active, setActive] = useState("/home");
   const { classes, cx } = useStyles();
 
-  const { data: wishlist } = useGetBookWishlistQuery(undefined);
-  const { data: planToReadBooks } = useGetPlanToReadBooksQuery(undefined);
   const user = userInfoFromLocalstorage;
   const navigate = useNavigate();
 
