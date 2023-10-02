@@ -1,4 +1,9 @@
 import {
+  useGetBookWishlistQuery,
+  useGetPlanToReadBooksQuery,
+} from "@/redux/api/bookApi";
+import { userInfoFromLocalstorage } from "@/utils/utils";
+import {
   Burger,
   Container,
   Group,
@@ -8,7 +13,8 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -65,6 +71,18 @@ function SiteHeader() {
   const [active, setActive] = useState("/home");
   const { classes, cx } = useStyles();
 
+  const { data: wishlist } = useGetBookWishlistQuery(undefined);
+  const { data: planToReadBooks } = useGetPlanToReadBooksQuery(undefined);
+  const user = userInfoFromLocalstorage;
+  const navigate = useNavigate();
+
+  const logoutHandle = () => {
+    localStorage.removeItem("Bookshelf-Info");
+    toast.success("Log out successfully");
+    navigate("/");
+    window.location.reload();
+  };
+
   return (
     <Header height={60}>
       <Container className={classes.header} size={"lg"}>
@@ -94,28 +112,40 @@ function SiteHeader() {
           >
             All Books
           </Link>
-          <Link
-            to="/sign-in"
-            className={cx(classes.link, {
-              [classes.linkActive]: active === "/sign-in",
-            })}
-            onClick={() => {
-              setActive("/sign-in");
-            }}
-          >
-            Sign In
-          </Link>
-          <Link
-            to="/sign-up"
-            className={cx(classes.link, {
-              [classes.linkActive]: active === "/sign-up",
-            })}
-            onClick={() => {
-              setActive("/sign-up");
-            }}
-          >
-            Sign Up
-          </Link>
+          {!user?.accessToken ? (
+            <>
+              {" "}
+              <Link
+                to="/sign-in"
+                className={cx(classes.link, {
+                  [classes.linkActive]: active === "/sign-in",
+                })}
+                onClick={() => {
+                  setActive("/sign-in");
+                }}
+              >
+                Sign In
+              </Link>
+              <Link
+                to="/sign-up"
+                className={cx(classes.link, {
+                  [classes.linkActive]: active === "/sign-up",
+                })}
+                onClick={() => {
+                  setActive("/sign-up");
+                }}
+              >
+                Sign Up
+              </Link>
+            </>
+          ) : (
+            <button
+              onClick={logoutHandle}
+              className="bg-blue-400 text-sm text-white font-medium px-2 py-1 rounded"
+            >
+              Log Out
+            </button>
+          )}
         </Group>
 
         <Burger

@@ -1,8 +1,7 @@
+import { useLoginUserMutation } from "@/redux/api/authApi";
 import {
   Anchor,
-  Button,
   Container,
-  Divider,
   Group,
   Paper,
   PasswordInput,
@@ -11,9 +10,32 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 
 function LoginScreen() {
+  const navigate = useNavigate();
+  const [loginUser, { data, isError, isSuccess, error }] =
+    useLoginUserMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data?.message);
+      navigate("/");
+
+      const localStorageData: { accessToken: string; email: string } = {
+        accessToken: data.data.accessToken,
+        email: data.data.email,
+      };
+      localStorage.setItem("Bookshelf-Info", JSON.stringify(localStorageData));
+      window.location.reload();
+    }
+    if (isError) {
+      toast.error((error as any)?.data?.message);
+    }
+  }, [isSuccess, isError]);
+
   const form = useForm({
     initialValues: {
       email: "",
@@ -23,73 +45,68 @@ function LoginScreen() {
     validate: {
       email: (val) => (/^\S+@\S+$/.test(val) ? null : "Invalid email"),
       password: (val) =>
-        val.length <= 6
+        val.length <= 5
           ? "Password should include at least 6 characters"
           : null,
     },
   });
 
-  const handleSubmit = () => {
-    console.log("first");
+  const handleSubmit = (data: any) => {
+    loginUser(data);
   };
   return (
-    <Container size={"xs"}>
-      <Paper radius="md" p="xl" withBorder>
-        <Text size="lg" weight={500}>
-          Welcome to Mantine, with
-        </Text>
+    <div className="mt-20">
+      <Container size={"xs"}>
+        <Paper radius="md" p="xl" withBorder>
+          <Text size="lg" weight={500}>
+            Welcome to Book Catalog
+          </Text>
 
-        <Group grow mb="md" mt="md">
-          <div>Google</div>
-        </Group>
+          <form onSubmit={form.onSubmit((data) => handleSubmit(data))}>
+            <Stack>
+              <TextInput
+                required
+                label="Email"
+                placeholder="hello@mantine.dev"
+                value={form.values.email}
+                onChange={(event) =>
+                  form.setFieldValue("email", event.currentTarget.value)
+                }
+                error={form.errors.email && "Invalid email"}
+                radius="md"
+              />
 
-        <Divider
-          label="Or continue with email"
-          labelPosition="center"
-          my="lg"
-        />
+              <PasswordInput
+                required
+                label="Password"
+                placeholder="Your password"
+                value={form.values.password}
+                onChange={(event) =>
+                  form.setFieldValue("password", event.currentTarget.value)
+                }
+                error={
+                  form.errors.password &&
+                  "Password should include at least 6 characters"
+                }
+                radius="md"
+              />
+            </Stack>
 
-        <form onSubmit={form.onSubmit(() => handleSubmit)}>
-          <Stack>
-            <TextInput
-              required
-              label="Email"
-              placeholder="hello@mantine.dev"
-              value={form.values.email}
-              onChange={(event) =>
-                form.setFieldValue("email", event.currentTarget.value)
-              }
-              error={form.errors.email && "Invalid email"}
-              radius="md"
-            />
-
-            <PasswordInput
-              required
-              label="Password"
-              placeholder="Your password"
-              value={form.values.password}
-              onChange={(event) =>
-                form.setFieldValue("password", event.currentTarget.value)
-              }
-              error={
-                form.errors.password &&
-                "Password should include at least 6 characters"
-              }
-              radius="md"
-            />
-          </Stack>
-
-          <Group position="apart" mt="xl">
-            <Anchor component={Link} to="/sign-up" color="dimmed" size="xs">
-              Don't have an account? Register
-            </Anchor>
-            <Button type="submit" radius="xl">
+            <Group position="apart" mt="xl">
+              <Anchor component={Link} to="/sign-up" color="dimmed" size="xs">
+                Don't have an account? Register
+              </Anchor>
+            </Group>
+            <button
+              type="submit"
+              className="bg-blue-500 w-full py-2 rounded text-white font-medium mt-3"
+            >
               Login
-            </Button>
-          </Group>
-        </form>
-      </Paper>
-    </Container>
+            </button>
+          </form>
+        </Paper>
+      </Container>
+    </div>
   );
 }
 
