@@ -2,13 +2,13 @@ import {
   useAddBookReviewMutation,
   useDeleteBookMutation,
   useGetSingleBookQuery,
-} from '@/redux/api/bookApi';
-import { updateBook } from '@/redux/features/bookSlice';
-import { userInfoFromLocalstorage } from '@/utils/utils';
-import { useEffect, useState } from 'react';
-import { toast } from 'react-hot-toast';
-import { useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+} from "@/redux/api/bookApi";
+import { updateBook } from "@/redux/features/bookSlice";
+import { userInfoFromLocalstorage } from "@/utils/utils";
+import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 
 const SingleBook = () => {
   const navigate = useNavigate();
@@ -27,12 +27,12 @@ const SingleBook = () => {
     },
   ] = useDeleteBookMutation();
   const [addBookReview] = useAddBookReviewMutation();
-  const [review, setReview] = useState('');
+  const [review, setReview] = useState("");
 
   useEffect(() => {
     if (deleteSuccess) {
       toast.success(deleteData?.message);
-      navigate('/all-books');
+      navigate("/all-books");
     }
     if (deleteIsError) {
       toast.error((deleteError as any)?.data?.message);
@@ -56,7 +56,7 @@ const SingleBook = () => {
 
   const handleEditButton = (userId: string) => {
     if (user?.email !== userEmail) {
-      return toast.error('You are not authorized to edit this book!');
+      return toast.error("You are not authorized to edit this book!");
     }
     dispatch(updateBook(data?.data));
     navigate(`/update-book/${userId}`);
@@ -66,10 +66,10 @@ const SingleBook = () => {
 
   const handleDeleteBook = () => {
     if (user?.email !== userEmail) {
-      return toast.error('You are not authorized to delete this book!');
+      return toast.error("You are not authorized to delete this book!");
     }
     const isTrue = window.confirm(
-      'Are you sure , you want to delete this book'
+      "Are you sure , you want to delete this book"
     );
     if (isTrue) {
       deleteBook(id);
@@ -79,15 +79,15 @@ const SingleBook = () => {
   const handleReview = (e: any) => {
     e.preventDefault();
     if (!user) {
-      return toast.error('You are not authorized! please login');
+      return toast.error("You are not authorized! please login");
     }
 
-    if (review !== '') {
+    if (review !== "") {
       const data = { review, user: user.email };
       addBookReview({ id, data });
-      setReview('');
+      setReview("");
     } else {
-      toast.error('Please write a review!');
+      toast.error("Please write a review!");
     }
   };
 
@@ -100,7 +100,7 @@ const SingleBook = () => {
           <div className="relative grid grid-cols-2 gap-3 rounded-xl bg-clip-border text-gray-700 shadow-md border">
             <div className="relative m-0 overflow-hidden bg-transparent bg-clip-border text-gray-700 shadow-none rounded-t-lg w-full h-full object-cover">
               <img
-                src={imageUrl ? imageUrl : 'https://i.ibb.co/CtRJv8S/book2.jpg'}
+                src={imageUrl ? imageUrl : "https://i.ibb.co/CtRJv8S/book2.jpg"}
                 alt="ui/ux review check w-full "
               />
             </div>
@@ -120,7 +120,7 @@ const SingleBook = () => {
               <div className="mt-3 flex gap-2">
                 <button
                   onClick={() => handleEditButton(userId)}
-                  className="bg-blue-800  hover:bg-blue-500 text-white w-24 py-2 text-center  rounded-lg"
+                  className="bg-blue-400  hover:bg-blue-500 text-white w-24 py-2 text-center  rounded-lg"
                 >
                   Edit
                 </button>
@@ -144,14 +144,14 @@ const SingleBook = () => {
                   ></textarea>
                   <button
                     type="submit"
-                    className="bg-blue-800   hover:bg-blue-500 text-white w-24 py-2 text-center  rounded-lg"
+                    className="bg-blue-400   hover:bg-blue-500 text-white w-24 py-2 text-center  rounded-lg"
                   >
                     Submit
                   </button>
                 </form>
               </div>
               <div>
-                <h3 className="font-semibold text-lg text-blue-800 my-2">
+                <h3 className="font-semibold text-lg text-blue-400 my-2">
                   Reviews
                 </h3>
                 {reviews?.length > 0 ? (
@@ -169,7 +169,7 @@ const SingleBook = () => {
                     );
                   })
                 ) : (
-                  <p className="text-blue-700 font-medium">
+                  <p className="text-blue-400 font-medium">
                     No reviews available!
                   </p>
                 )}

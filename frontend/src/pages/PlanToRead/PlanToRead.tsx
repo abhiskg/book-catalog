@@ -1,5 +1,5 @@
-import Card from '@/components/Card';
-import { useGetPlanToReadBooksQuery } from '@/redux/api/bookApi';
+import Card from "@/components/Card";
+import { useGetPlanToReadBooksQuery } from "@/redux/api/bookApi";
 const PlanToRead = () => {
   const { data: planToReadBooks, isLoading } =
     useGetPlanToReadBooksQuery(undefined);
@@ -12,7 +12,7 @@ const PlanToRead = () => {
   }
   return (
     <section className="my-10 px-20">
-      <h3 className="text-blue-800 font-semibold text-xl mb-3">
+      <h3 className="text-blue-400 font-semibold text-xl mb-3">
         Plan To Read Books
       </h3>
       {planToReadBooks?.data?.data?.length > 0 ? (

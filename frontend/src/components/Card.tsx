@@ -100,50 +100,6 @@ const Card = ({ book }: any) => {
             className="w-full h-full object-cover"
           />
           <div className="flex flex-col gap-3 absolute right-3 top-3">
-            <button
-              onClick={() => handleWishlist()}
-              className="bg-red-200 p-2 rounded-full"
-            >
-              {wishlist?.data?.data?.find(
-                (x: any) => x?.bookId === book?._id
-              ) ? (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="22"
-                  height="22"
-                  fill="currentColor"
-                  className="bi bi-heart-fill"
-                  viewBox="0 0 16 16"
-                  id="IconChangeColor"
-                >
-                  {" "}
-                  <path
-                    fill-rule="evenodd"
-                    d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
-                    id="mainIconPathAttribute"
-                    fill="#ff006a"
-                    stroke-width="0"
-                    stroke="#ff0000"
-                  ></path>{" "}
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="22"
-                  height="22"
-                  className="bi bi-heart"
-                  viewBox="0 0 16 16"
-                  id="IconChangeColor"
-                  fill="#ff006a"
-                >
-                  {" "}
-                  <path
-                    d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
-                    id="mainIconPathAttribute"
-                  ></path>{" "}
-                </svg>
-              )}
-            </button>
             <Link
               to={`/book/${book._id}`}
               className="bg-gray-300 p-2 rounded-full"
@@ -171,26 +127,72 @@ const Card = ({ book }: any) => {
           </div>
         </div>
         <div className="px-2 pb-4">
-          <span className="font-semibold capitalize text-sm text-gray-500">
-            {genre}
-          </span>
+          <div className="flex items-center justify-between">
+            <span className="font-semibold capitalize text-sm text-gray-500">
+              {genre}
+            </span>
+            <button
+              onClick={() => handleWishlist()}
+              className="bg-red-200 p-2 rounded-full"
+            >
+              {wishlist?.data?.data?.find(
+                (x: any) => x?.bookId === book?._id
+              ) ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  fill="currentColor"
+                  className="bi bi-heart-fill"
+                  viewBox="0 0 16 16"
+                  id="IconChangeColor"
+                >
+                  {" "}
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"
+                    id="mainIconPathAttribute"
+                    fill="#ff006a"
+                    stroke-width="0"
+                    stroke="#ff0000"
+                  ></path>{" "}
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  className="bi bi-heart"
+                  viewBox="0 0 16 16"
+                  id="IconChangeColor"
+                  fill="#ff006a"
+                >
+                  {" "}
+                  <path
+                    d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"
+                    id="mainIconPathAttribute"
+                  ></path>{" "}
+                </svg>
+              )}
+            </button>
+          </div>
           <h4 className="block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased mb-3 capitalize">
-            {title?.length > 10 ? `${title.slice(0, 10)}...` : title}
+            {title?.length > 15 ? `${title.slice(0, 15)}...` : title}
           </h4>
           <p className="block font-sans text-base font-normal leading-relaxed text-inherit antialiased">
             Author Name :{" "}
-            {author?.length > 10 ? `${author.slice(0, 10)}...` : title}
+            {author?.length > 10 ? `${author.slice(0, 10)}...` : author}
           </p>
           <p className="block font-sans text-base font-normal leading-relaxed text-inherit antialiased">
             Publication Date : {publication}
           </p>
 
-          <div className="mt-3 flex flex-col justify-between gap-2">
+          <div className="mt-3 flex  justify-between gap-2">
             <button
               onClick={() => handlePlaneToReadBook(book)}
-              className="bg-blue-300  px-3 text-sm py-2 rounded-lg flex gap-2 items-center justify-between"
+              className="bg-blue-300  px-3 text-sm py-2 rounded-lg flex gap-2 items-center justify-between w-full"
             >
-              <span> Plan To Read</span>
+              <span> Plan Reading</span>
 
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -220,7 +222,7 @@ const Card = ({ book }: any) => {
             </button>
             <button
               onClick={() => handleFinishedBook(book)}
-              className="bg-blue-300  px-3 text-sm py-2 rounded-lg flex gap-2 items-center justify-between"
+              className="bg-blue-300 w-full  px-3 text-sm py-2 rounded-lg flex gap-2 items-center justify-between"
             >
               <span> Finished</span>
               <svg
